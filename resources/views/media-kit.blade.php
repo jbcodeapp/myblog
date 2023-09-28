@@ -4,43 +4,58 @@
     :hide-navigation="true"
     :hide-footer="true"
 >
-    <nav class="container flex items-center justify-between mt-4 lg:max-w-screen-md">
-        <x-logo />
+    @empty($hideNavigation)
+        <x-navigation class="mt-4" />
+    @endempty
 
-        <a wire:navigate.hover href="{{ route('home') }}" class="underline">
-            Back to the blog →
-        </a>
-    </nav>
+    <div
+        class="!h-[175px] md:!h-[200px] container flex items-end justify-center gap-2 md:gap-4 mt-16 md:mt-24 md:max-w-screen-sm"
+        x-data="{ animate: false }"
+    >
+        <div
+            class="w-8 h-0 transition-all duration-500 rounded-lg md:w-12 bg-gradient-to-b from-blue-400 to-cyan-300 delay-0"
+            x-bind:class="{ '!h-[25px] md:!h-[50px]': animate }"
+            x-intersect="animate = true"
+        ></div>
 
-    <div class="container mt-16 max-w-[320px] md:max-w-[400px] mx-auto md:mt-24">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 916 616">
-            <defs>
-                <linearGradient id="gradient" x1="0%" y1="100%" x2="0%" y2="0%">
-                    <stop offset="0%" style="stop-color: #24d3ee; stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: #49de80; stop-opacity: 1" />
-                </linearGradient>
-            </defs>
+        <div
+            class="w-8 h-0 transition-all duration-500 delay-75 rounded-lg md:w-12 bg-gradient-to-b from-blue-400 to-cyan-300"
+            x-bind:class="{ '!h-[50px] md:!h-[75px]': animate }"
+            x-intersect="animate = true"
+        ></div>
 
-            <style>
-                @keyframes draw {
-                    to {
-                        stroke-dashoffset: 0;
-                    }
-                }
+        <div
+            class="w-8 h-0 transition-all duration-500 delay-100 rounded-lg md:w-12 bg-gradient-to-b from-blue-400 to-cyan-300"
+            x-bind:class="{ '!h-[75px] md:!h-[100px]': animate }"
+            x-intersect="animate = true"
+        ></div>
 
-                .line {
-                    stroke: url(#gradient);
-                    stroke-dasharray: 3500;
-                    stroke-dashoffset: 3500;
-                    animation: draw 2s forwards ease-in-out;
-                }
-            </style>
+        <div
+            class="w-8 h-0 transition-all duration-500 delay-150 rounded-lg md:w-12 bg-gradient-to-b from-blue-400 to-cyan-300"
+            x-bind:class="{ '!h-[100px] md:!h-[125px]': animate }"
+            x-intersect="animate = true"
+        ></div>
 
-            <g fill="none" fill-rule="evenodd"><path stroke="#182454" stroke-opacity=".4" d="M8 608h900" /><path stroke="#182454" stroke-opacity=".15" d="M908 508H8m0-100h900m0-100H8m0-100h900m0-100H8M908 8H8" /><path stroke="#979797" stroke-linecap="round" stroke-linejoin="round" stroke-width="15" d="m8 608 100-42.180618L208 408l100 100 100 32.564033 100-61.164986L608 508l100-28.600953L808 108 908 8" class="line" /></g>
-        </svg>
+        <div
+            class="w-8 h-0 transition-all duration-500 delay-200 rounded-lg md:w-12 bg-gradient-to-b from-blue-400 to-cyan-300"
+            x-bind:class="{ '!h-[125px] md:!h-[150px]': animate }"
+            x-intersect="animate = true"
+        ></div>
+
+        <div
+            class="w-8 h-0 transition-all duration-500 delay-300 rounded-lg md:w-12 bg-gradient-to-b from-blue-400 to-cyan-300"
+            x-bind:class="{ '!h-[150px] md:!h-[175px]': animate }"
+            x-intersect="animate = true"
+        ></div>
+
+        <div
+            class="w-8 h-0 transition-all duration-500 delay-[400ms] md:w-12 bg-gradient-to-b from-blue-400 to-cyan-300 rounded-md"
+            x-bind:class="{ '!h-[175px] md:!h-[200px]': animate }"
+            x-intersect="animate = true"
+        ></div>
     </div>
 
-    <x-section class="container mt-12 text-center">
+    <x-section class="container mt-8 text-center md:mt-12">
         <x-slot:title tag="h1" class="!text-3xl sm:!text-4xl md:!text-5xl font-bold">
             <span class="font-bold text-transparent bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text">
                 Get your company in the&nbsp;spotlight.
@@ -66,16 +81,17 @@
         <x-sponsors class="justify-center" />
     </x-section>
 
-    <div class="mt-8 bg-gray-200/50 md:mt-16">
+    <div class="mt-24 bg-gradient-to-r from-gray-200/[.35] to-gray-200/[.15] md:mt-32">
         <div class="container lg:max-w-screen-md">
             <div class="py-8 md:flex md:items-center md:gap-8">
-                <img loading="lazy" src="{{ Vite::asset('/resources/img/sebastian.jpg') }}" width="96" height="96" class="flex-shrink-0 aspect-square w-[96px] order-2 h-[96px] rounded-full mx-auto" alt="Sebastian Schlein" />
+                <img loading="lazy" src="{{ Vite::asset('resources/img/sebastian.jpg') }}" width="96" height="96" class="flex-shrink-0 aspect-square w-[96px] order-2 h-[96px] rounded-full mx-auto" alt="Sebastian Schlein" />
 
-                <blockquote class="order-1 mt-6 md:text-xl md:mt-0">
-                    Benjamin is overtaking us on some Google search results, so I'm jumping on board before he raises his prices.
+                <blockquote class="order-1 mt-6 text-xl md:mt-0">
+                    “Benjamin is overtaking us on some Google search results, so I'm jumping on board before he raises his prices.”
 
-                    <cite class="block mt-8 text-sm not-italic md:text-base">
-                        Sebastian Schlein, co-founder of <a href="https://beyondco.de" class="text-indigo-400 underline">Beyond Code</a>.
+                    <cite class="block mt-8 text-gray-500">
+                        Sebastian Schlein<br />
+                        Co-founder of <a href="https://beyondco.de" class="text-indigo-400 underline">Beyond Code</a>
                     </cite>
                 </blockquote>
             </div>
@@ -244,12 +260,12 @@
     </x-section>
 
     <div class="container mt-16 text-center md:max-w-screen-sm">
-        <a href="https://benjamincrozat.lemonsqueezy.com/checkout/buy/46d80f6a-3631-492a-8e6b-0f42d288ccce?discount=0" class="inline-block px-6 py-3 text-white transition-opacity bg-orange-400 rounded hover:opacity-75">
-            Get started for <strong class="font-extrabold">$79/month</strong>
+        <a href="https://benjamincrozat.lemonsqueezy.com/checkout/buy/46d80f6a-3631-492a-8e6b-0f42d288ccce?discount=0" class="inline-block px-6 py-3 font-bold text-white transition-opacity bg-orange-400 rounded hover:opacity-75">
+            Get started for $79/month
         </a>
 
-        <p class="mt-4">
-            Or simplify your accounting with <a href="https://benjamincrozat.lemonsqueezy.com/checkout/buy/54994675-a900-4693-99f0-22997bbd8441?discount=0" class="font-medium underline">yearly payments</a>.
+        <p class="mt-4 font-medium">
+            Or simplify your accounting with <a href="https://benjamincrozat.lemonsqueezy.com/checkout/buy/54994675-a900-4693-99f0-22997bbd8441?discount=0" class="underline">yearly payments</a>.
         </p>
 
         <p class="mt-4 text-sm">Once the payment is done, you will receive instructions on how to send me your company name, logo, and landing page of choice.</p>
@@ -318,8 +334,8 @@
     </x-section>
 
     <div class="container mt-16 text-center md:max-w-screen-sm">
-        <a href="https://benjamincrozat.lemonsqueezy.com/checkout/buy/cc173e8e-bafe-48a2-a406-b42b68a7150d" class="inline-block px-6 py-3 text-white transition-opacity bg-orange-400 rounded hover:opacity-75">
-            Get started for <strong class="font-extrabold">$499</strong>
+        <a href="https://benjamincrozat.lemonsqueezy.com/checkout/buy/cc173e8e-bafe-48a2-a406-b42b68a7150d" class="inline-block px-6 py-3 font-bold text-white transition-opacity bg-orange-400 rounded hover:opacity-75">
+            Get started for $499
         </a>
 
         <p class="mt-4 text-sm">Once the payment is done, you will receive instructions on how to send me your content.</p>

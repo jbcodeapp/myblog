@@ -4,12 +4,17 @@ namespace App\Repositories;
 
 use App\Models\Post;
 use Illuminate\Support\Collection;
-use Facades\Algolia\AlgoliaSearch\RecommendClient;
+use Algolia\AlgoliaSearch\RecommendClient;
 use App\Repositories\Contracts\PostRepositoryContract;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PostRepository implements PostRepositoryContract
 {
+    public function __construct(
+        public RecommendClient $recommend
+    ) {
+    }
+
     public function get(string $slug) : ?Post
     {
         return Post::query()
@@ -21,7 +26,9 @@ class PostRepository implements PostRepositoryContract
 
     public function latest(int $page = null) : LengthAwarePaginator|Collection
     {
-        return Post::with('categories', 'media')
+        /** @var LengthAwarePaginator|Collection */
+        $posts = Post::query()
+            ->with('categories', 'media')
             ->published()
             ->latest()
             ->when(
@@ -29,22 +36,29 @@ class PostRepository implements PostRepositoryContract
                 fn ($query) => $query->paginate(21),
                 fn ($query) => $query->limit(11)->get(),
             );
+
+        return $posts;
     }
 
     public function popular() : Collection
     {
-        return Post::with('categories', 'media')
+        /** @var LengthAwarePaginator|Collection */
+        $posts = Post::query()
+            ->with('categories', 'media')
             ->published()
             ->orderBy('sessions_last_7_days', 'desc')
             ->limit(11)
             ->get();
+
+        return $posts;
     }
 
     public function recommendations(int $id) : Collection
     {
-        $ids = $this->getAlgoliaRecommendations()->pluck('objectID');
+        $ids = $this->getAlgoliaRecommendations($id)->pluck('objectID');
 
-        return Post::query()
+        /** @var Collection */
+        $recommendations = Post::query()
             ->with('categories', 'media')
             ->published()
             ->whereNotIn('id', [$id])
@@ -54,23 +68,22 @@ class PostRepository implements PostRepositoryContract
                 fn ($query) => $query->inRandomOrder()->limit(11)
             )
             ->get();
+
+        return $recommendations;
     }
 
-    protected function getAlgoliaRecommendations() : Collection
+    protected function getAlgoliaRecommendations(int $id) : Collection
     {
-        if (! $this->algoliaEnabled()) {
-            return collect();
-        }
-
-        return collect(RecommendClient::getRelatedProducts([[
+        return $this->algoliaEnabled() ? collect($this->recommend->getRelatedProducts([[
             'indexName' => config('scout.prefix') . 'posts',
-            'objectID' => 'id',
+            'objectID' => "$id",
             'maxRecommendations' => 11,
-        ]]));
+        ]])) : new Collection;
     }
 
     protected function algoliaEnabled() : bool
     {
-        return ! empty(config('scout.algolia.id')) && ! empty(config('scout.algolia.secret'));
+        return ! empty(config('scout.algolia.id')) &&
+               ! empty(config('scout.algolia.secret'));
     }
 }
