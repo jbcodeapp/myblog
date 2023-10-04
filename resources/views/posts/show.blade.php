@@ -56,7 +56,8 @@
 
     <x-section class="container">
         <x-slot:title class="text-xl text-center">
-            Recommended
+            <x-icon-thumb-up class="h-16 mx-auto" />
+            <div class="mt-2">Recommended</div>
         </x-slot:title>
 
         <ul class="grid gap-8 mt-8 md:grid-cols-2 md:gap-16">

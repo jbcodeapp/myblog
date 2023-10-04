@@ -11,21 +11,17 @@ use Illuminate\Foundation\Application;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\CategoryRepository;
-use App\Repositories\PostCacheRepository;
 use Algolia\AlgoliaSearch\RecommendClient;
-use App\Repositories\CategoryCacheRepository;
+use App\Repositories\Contracts\PostRepositoryContract;
+use App\Repositories\Contracts\CategoryRepositoryContract;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function register() : void
     {
-        $this->app->bind(CategoryRepository::class, fn () => new CategoryRepository);
+        $this->app->bind(CategoryRepositoryContract::class, CategoryRepository::class);
 
-        $this->app->bind(CategoryCacheRepository::class, CategoryCacheRepository::class);
-
-        $this->app->bind(PostRepository::class, PostRepository::class);
-
-        $this->app->bind(PostCacheRepository::class, PostCacheRepository::class);
+        $this->app->bind(PostRepositoryContract::class, PostRepository::class);
 
         $this->app->bind(RecommendClient::class, function (Application $app) {
             return RecommendClient::create(
@@ -60,8 +56,6 @@ class AppServiceProvider extends ServiceProvider
             $view->with(compact('categories'));
         });
 
-        Vite::useScriptTagAttributes([
-            'defer' => true,
-        ]);
+        Vite::useScriptTagAttributes(['defer' => true]);
     }
 }

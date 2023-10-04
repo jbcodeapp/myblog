@@ -2,23 +2,18 @@
 
 use App\Models\Post;
 use App\Models\User;
-use App\Events\PostSaved;
+use App\Facades\Posts;
 use App\Jobs\TrackPageView;
 
 use function Pest\Laravel\get;
 use function Pest\Laravel\actingAs;
 
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Event;
 
 use function Pest\Laravel\assertGuest;
 
-use Facades\App\Repositories\PostCacheRepository as Posts;
-
 beforeEach(function () {
     Bus::fake(TrackPageView::class)->serializeAndRestore();
-
-    Event::fake([PostSaved::class]);
 });
 
 test('a given published post is shown correctly and the page view is tracked', function () {

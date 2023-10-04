@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Presenters;
+namespace App\Presenters;
 
 use App\Str;
 use App\Tree;
@@ -22,7 +22,7 @@ class PostPresenter extends BasePresenter
     public function tree() : array
     {
         return cache()->rememberForever(
-            "post_{$this->model->id}_tree",
+            "post_{$this->model->id}_" . __FUNCTION__,
             fn () => (new Tree)->build($this->content())
         );
     }
@@ -30,7 +30,7 @@ class PostPresenter extends BasePresenter
     public function content() : string
     {
         return cache()->rememberForever(
-            "post_{$this->model->id}_content",
+            "post_{$this->model->id}_" . __FUNCTION__,
             fn () => Str::markdown($this->model->content ?? '')
         );
     }
@@ -38,7 +38,7 @@ class PostPresenter extends BasePresenter
     public function teaser() : string
     {
         return cache()->rememberForever(
-            "post_{$this->model->id}_content",
+            "post_{$this->model->id}_" . __FUNCTION__,
             fn () => Str::markdown($this->model->teaser ?? '')
         );
     }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
-use Facades\App\Repositories\PostCacheRepository as Posts;
+use App\Facades\Posts;
 
 class ListPostsController extends Controller
 {
