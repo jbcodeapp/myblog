@@ -3,16 +3,17 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="description" content="{{ $description ?? 'Join more than 40,000 readers and skyrocket your web development skills.' }}" />
+        <meta name="description" content="{{ $description ?? 'Join more than 50,000 readers and skyrocket your web development skills.' }}" />
         <meta property="og:title" content="{{ $title ?? config('app.name') }}" />
         <meta property="og:image" content="{{ $image ?? 'https://i.useflipp.com/gw6mxpkgy4v8.png?title=' . urlencode($title ?? '') . '&body=' . urlencode($description ?? '') . '&watermark=useflipp.com' }}" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="{{ url()->current() }}" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@benjamincrozat" />
-        <meta name="twitter:description" content="{{ $description ?? 'Join more than 40,000 readers and skyrocket your web development skills.' }}" />
+        <meta name="twitter:description" content="{{ $description ?? 'Join more than 50,000 readers and skyrocket your web development skills.' }}" />
         <meta name="twitter:image" content="{{ $image ?? 'https://i.useflipp.com/gw6mxpkgy4v8.png?title=' . urlencode($title ?? '') . '&body=' . urlencode($description ?? '') . '&watermark=useflipp.com' }}" />
         <meta name="twitter:title" content="{{ $title ?? config('app.name') }}" />
+        <meta name="theme-color" content="#f9fafb" />
 
         <title>{{ $title ?? config('app.name') }}</title>
 
@@ -20,14 +21,12 @@
 
         @livewireStyles
 
-        @unless(app()->runningUnitTests())
-            @googlefonts
-            @googlefonts('handwriting')
-        @endunless
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" />
 
         @vite(['resources/js/app.js'])
-
-        @livewireScripts
 
         @if (app()->isProduction() && auth()->id() !== 1)
             <script
@@ -47,37 +46,42 @@
         <link rel="icon" type="image/jpeg" sizes="96x96" href="{{ Vite::asset('resources/img/96x96.jpg') }}" />
 
         <link rel="canonical" href="{{ $canonical ?? url()->current() }}" />
-
-        <meta name="theme-color" content="#f9fafb" />
     </head>
     <body
         {{ $attributes->except(['description', 'image', 'title', 'canonical'])->merge([
             'class' => 'bg-gray-50 font-light',
         ]) }}
         x-data="{}"
-        x-init="$nextTick(
-            () => document.querySelectorAll('pre code').forEach(
-                el => hljs.highlightElement(el)
-            )
-        )">
+    >
         <div class="flex flex-col min-h-screen">
+            @if (! request()->routeIs('dummy-store.*', 'media-kit', 'openings.*', 'pouest', 'sponsors'))
+                <div class="block text-sm text-white bg-gradient-to-r from-gray-900 to-gray-800">
+                    <div class="container flex items-center justify-center gap-4 py-3 md:gap-8 md:max-w-screen-sm">
+                        <div>
+                            “Black Friday deals end soon, so <a wire:navigate.hover href="https://benjamincrozat.com/best-black-friday-deals-2023" class="font-medium underline">go check them out</a>!<br />
+                            And as always, <a href="https://larajobs.com?utm_source=benjamincrozat&utm_medium=banner&utm_campaign=benjamincrozat" target="_blank" rel="noopener" class="font-medium underline">LaraJobs</a> has plenty of job offers for you!”
+                        </div>
+
+                        <img loading="lazy" src="https://www.gravatar.com/avatar/d58b99650fe5d74abeb9d9dad5da55ad?s=84" alt="Benjamin Crozat" class="rounded-full w-[32px] md:w-[34px] h-[32px] md:h-[34px]" />
+                    </div>
+                </div>
+            @endif
+
             @empty($hideNavigation)
                 <x-navigation class="mt-4" />
             @endempty
-
-            @auth
-                <form method="POST" action="{{ route('logout') }}" id="logout" class="hidden">@csrf</form>
-            @endauth
 
             <main>
                 {{ $slot }}
             </main>
 
             @empty($hideFooter)
-                <x-footer class="flex-grow mt-16 bg-gradient-to-r from-gray-200/[.35] to-gray-200/[.15]" />
+                <div class="mt-16"></div>
+
+                <x-footer class="flex-grow bg-gradient-to-r from-gray-200/[.35] to-gray-200/[.15]" />
             @endempty
         </div>
 
-        <x-status />
+        @livewireScriptConfig
     </body>
 </html>

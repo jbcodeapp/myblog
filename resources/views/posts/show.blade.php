@@ -4,8 +4,12 @@
     :image="$post->presenter()->image()"
     :canonical="$post->community_link ?? null"
 >
-    <div class="container mt-16 lg:max-w-screen-md">
-        <x-breadcrumb class="mb-8">
+    <div class="container mt-8 lg:max-w-screen-md">
+        <x-breadcrumb class="mb-9">
+            <x-slot:middle :href="route('posts.index')">
+                Articles
+            </x-slot:middle>
+
             {{ $post->title }}
         </x-breadcrumb>
 
@@ -13,24 +17,21 @@
 
         <article class="mt-4">
             <x-prose>
-                <div class="mb-8">
-                    @if ($post->community_link)
-                        <h1>
-                            <a href="{{ $post->community_link }}" target="_blank" rel="noopener" class="underline">
-                                {{ $post->title }}
-                            </a>
-                        </h1>
-                    @else
-                        <h1>{{ $post->title }}</h1>
-                    @endif
+                <h1>{{ $post->title }}</h1>
 
-                    <x-post.date :post="$post" />
-                </div>
+                <x-post.date :post="$post" class="mb-8" />
 
                 <x-post.tree.trunk :tree="$post->presenter()->tree()" />
 
                 @if ($image = $post->presenter()->image())
-                    <img loading="lazy" src="{{ $image }}" alt="{{ $post->title }}" class="w-full" />
+                    <img
+                        loading="lazy"
+                        src="{{ $image }}"
+                        width="1000"
+                        height="562"
+                        alt="{{ $post->title }}"
+                        class="object-cover w-full aspect-video"
+                    />
                 @endif
 
                 {!! $post->presenter()->content() !!}
@@ -56,18 +57,10 @@
 
     <x-section class="container">
         <x-slot:title class="text-xl text-center">
-            <x-icon-thumb-up class="h-16 mx-auto" />
-            <div class="mt-2">Recommended</div>
+            Recommended
         </x-slot:title>
 
-        <ul class="grid gap-8 mt-8 md:grid-cols-2 md:gap-16">
-            <li>
-                <x-post-template
-                    title="Your sponsored article here"
-                    description="Talk about your business, stay on top of everything for a week, and get a valuable link for life."
-                />
-            </li>
-
+        <ul class="grid gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 md:gap-16">
             @foreach ($recommendations as $recommendation)
                 <li>
                     <x-post :post="$recommendation" />
@@ -75,4 +68,8 @@
             @endforeach
         </ul>
     </x-section>
+
+    <x-divider />
+
+    <x-donate id="donate" class="container lg:max-w-screen-md" />
 </x-app>

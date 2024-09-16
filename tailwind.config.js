@@ -42,8 +42,9 @@ module.exports = {
                                 },
                             },
                         },
-                        'a': {
+                        a: {
                             'font-weight': 'inherit',
+                            'color': colors.indigo[600],
                         },
                         'iframe[src^="https://www.youtube.com"]': {
                             'width': '100% !important',
@@ -51,6 +52,9 @@ module.exports = {
                             'aspect-ratio': defaultTheme.aspectRatio.video,
                             'border-radius': defaultTheme.borderRadius.md,
                             'box-shadow': defaultTheme.boxShadow.lg,
+                        },
+                        pre: {
+                            padding: 0,
                         },
                     },
                 },

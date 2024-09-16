@@ -1,10 +1,12 @@
-[![Laravel Forge Site Deployment Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2F853f706f-237e-49ce-9812-7d452d57c0bb%3Fdate%3D1%26commit%3D1&style=for-the-badge)](https://forge.laravel.com)
+**This repository is for version 2 of my blog. The version 3 is hosted on a private repository. However, the content of my blog is now open source and everyone can contribute: [benjamincrozat/content](https://github.com/benjamincrozat/content)**
+
+[![Laravel Forge Site Deployment Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2Fd43de459-aca8-4a36-9b50-8952279f1f68%3Fdate%3D1%26commit%3D1&style=for-the-badge)](https://forge.laravel.com/servers/651685/sites/2125048)
 
 <img src="https://github.com/benjamincrozat/benjamincrozat.com/assets/3613731/d80fbb79-7de6-4b2d-ab62-602890c6aa82" width="64" height="64" alt="The logo of the blog of Benjamin Crozat." />
 
 # [benjamincrozat.com](https://benjamincrozat.com)
 
-This is the source code of my blog, [benjamincrozat.com](https://benjamincrozat.com). This blog was built with the TALL stack and gets more than **40,000 visitors per month**.
+This is the source code of my blog, [benjamincrozat.com](https://benjamincrozat.com). This blog was built with the TALL stack and gets more than **50,000 visitors per month**.
 
 <figure>
     <img src="https://github.com/benjamincrozat/benjamincrozat.com/assets/3613731/470cc829-c23f-4cdd-b769-68c2726fa738" alt="My Pirsch Analytics Dashboard." />
@@ -42,7 +44,7 @@ This is a small project. It certainly won't teach you how to maintain apps at hu
 - **I don't care about code coverage and static analysis**, so you won't find that here.
 - **This is pure and plain Laravel.** If you know the framework, you can find your way around the codebase.
 - **The tests are organized just like the source code.** Most of the time, it makes it easier to know what is tested and what is not.
-- **My commit history is garbage.** I'm sorry and I know it's wrong. But when you are working alone of a project, it's hard to maintain discipline for such things.
+- **My commit history is garbage.** I'm sorry and I know it's wrong. But when you are working alone on a project, it's hard to maintain discipline for such things.
 
 ## Requirements
 
@@ -106,6 +108,5 @@ php artisan test
 Once the tests are green in the CI environment, a webhook from Laravel Forge is called, which triggers the deployment. 
 
 Some details about the production environment:
-- I host the blog on a [$6 DigitalOcean VPS](https://benjamincrozat.com/recommends/digitalocean).
-- I could have stopped here, but I'm also using [a managed MySQL database](https://benjamincrozat.com/recommends/digitalocean-managed-mysql-database) for frequent automatic backups and not having to deal with anything related to the configuration.
+- I host the blog on a [$6 DigitalOcean VPS](https://benjamincrozat.com/recommends/digitalocean) that's managed by [Ploi](https://benjamincrozat.com/recommends/ploi).
 - I use Sentry to monitor errors in the production environment only.

@@ -19,15 +19,7 @@ it('displays the categories and put the highlighted ones first', function () {
 
     $categories = get(route('home'))
         ->assertOk()
-        ->assertViewIs('home')
-        ->viewData('categories');
-
-    expect($categories)->toBeInstanceOf(Collection::class);
-    expect($categories)->toHaveCount(3);
-    $categories->each(
-        fn (Category $category) => expect($category->latestPosts->isNotEmpty())->toBeTrue()
-    );
-    expect($categories->first()->id)->toBe($fakeCategories->first()->id);
+        ->assertViewIs('home');
 });
 
 it('displays popular posts', function () {
@@ -40,7 +32,7 @@ it('displays popular posts', function () {
         ->viewData('popular');
 
     expect($popular)->toBeInstanceOf(Collection::class);
-    expect($popular)->toHaveCount(11);
+    expect($popular)->toHaveCount(9);
     expect(fn () => $popular->ensure(Post::class))->not->toThrow(UnexpectedValueException::class);
 });
 
@@ -54,6 +46,6 @@ it('displays the latest posts', function () {
         ->viewData('latest');
 
     expect($latest)->toBeInstanceOf(Collection::class);
-    expect($latest)->toHaveCount(11);
+    expect($latest)->toHaveCount(9);
     expect(fn () => $latest->ensure(Post::class))->not->toThrow(UnexpectedValueException::class);
 });

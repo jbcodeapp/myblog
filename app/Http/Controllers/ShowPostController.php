@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
-use App\Jobs\TrackPageView;
 use App\Facades\Posts;
+use App\Jobs\TrackPageView;
 
 class ShowPostController extends Controller
 {
-    public function __invoke(string $slug) : View
+    public function __invoke(string $slug)
     {
         $post = Posts::get($slug);
 
@@ -26,7 +25,7 @@ class ShowPostController extends Controller
         )->afterResponse();
 
         return view('posts.show', compact('post') + [
-            'recommendations' => Posts::recommendations($post->id),
+            'recommendations' => $post->published_at ? Posts::recommendations($post->id) : collect(),
         ]);
     }
 }

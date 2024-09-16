@@ -11,7 +11,7 @@ class PostPresenter extends BasePresenter
 {
     public function image() : ?string
     {
-        return $this->model->getFirstMedia('image')?->getAvailableFullUrl(['optimized']);
+        return $this->model->getFirstMedia('image')?->getAvailableFullUrl(['medium']);
     }
 
     public function imagePreview() : ?string
@@ -21,26 +21,17 @@ class PostPresenter extends BasePresenter
 
     public function tree() : array
     {
-        return cache()->rememberForever(
-            "post_{$this->model->id}_" . __FUNCTION__,
-            fn () => (new Tree)->build($this->content())
-        );
+        return (new Tree)->build($this->content());
     }
 
     public function content() : string
     {
-        return cache()->rememberForever(
-            "post_{$this->model->id}_" . __FUNCTION__,
-            fn () => Str::markdown($this->model->content ?? '')
-        );
+        return Str::markdown($this->model->content ?? '');
     }
 
     public function teaser() : string
     {
-        return cache()->rememberForever(
-            "post_{$this->model->id}_" . __FUNCTION__,
-            fn () => Str::markdown($this->model->teaser ?? '')
-        );
+        return Str::markdown($this->model->teaser ?? '');
     }
 
     public function communityLinkDomain() : string

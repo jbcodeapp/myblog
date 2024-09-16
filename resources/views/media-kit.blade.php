@@ -1,13 +1,7 @@
 <x-app
     title="Sponsor me and get your company in the spotlight."
-    description="More than 40,000 eager developers visit my blog each month. Why don't you introduce your brand?"
-    :hide-navigation="true"
-    :hide-footer="true"
+    description="More than 50,000 eager developers visit my blog each month. Why don't you introduce your brand?"
 >
-    @empty($hideNavigation)
-        <x-navigation class="mt-4" />
-    @endempty
-
     <div
         class="!h-[175px] md:!h-[200px] container flex items-end justify-center gap-2 md:gap-4 mt-16 md:mt-24 md:max-w-screen-sm"
         x-data="{ animate: false }"
@@ -63,10 +57,10 @@
         </x-slot:title>
 
         <p class="mt-4 text-xl md:text-2xl md:mt-2 lg:text-3xl">
-            More than <span class="font-semibold text-transparent bg-gradient-to-r from-indigo-300 to-indigo-400 bg-clip-text">40,000</span> eager developers visit&nbsp;my&nbsp;blog&nbsp;each&nbsp;month.
+            More than <span class="font-semibold text-transparent bg-gradient-to-r from-indigo-300 to-indigo-400 bg-clip-text">50,000</span> eager developers visit&nbsp;my&nbsp;blog&nbsp;each&nbsp;month.
         </p>
 
-        <div class="mt-16">
+        <div class="mt-8">
             <a href="https://benjamincrozat.pirsch.io/?domain=benjamincrozat.com&interval=30d&scale=day" target="_blank" rel="nofollow noopener" class="inline-block px-6 py-3 font-bold transition-opacity rounded bg-gradient-to-r from-gray-200/50 to-gray-200 hover:opacity-75">
                 Access my analytics dashboard
             </a>
@@ -78,25 +72,21 @@
             These people trust me
         </x-slot:title>
 
-        <x-sponsors class="justify-center" />
+        <x-sponsors-logos class="justify-center" />
     </x-section>
 
-    <div class="mt-24 bg-gradient-to-r from-gray-200/[.35] to-gray-200/[.15] md:mt-32">
-        <div class="container lg:max-w-screen-md">
-            <div class="py-8 md:flex md:items-center md:gap-8">
-                <img loading="lazy" src="{{ Vite::asset('resources/img/sebastian.jpg') }}" width="96" height="96" class="flex-shrink-0 aspect-square w-[96px] order-2 h-[96px] rounded-full mx-auto" alt="Sebastian Schlein" />
+    <x-testimonial
+        :img-url="Vite::asset('resources/img/sebastian.jpg')"
+        img-alt="Sebastian Schlein"
+        author-name="Sebastien Schlein"
+        class="mt-8 md:mt-16"
+    >
+        “Benjamin is overtaking us on some Google search results, so I'm jumping on board before he raises his prices.”
 
-                <blockquote class="order-1 mt-6 text-xl md:mt-0">
-                    “Benjamin is overtaking us on some Google search results, so I'm jumping on board before he raises his prices.”
-
-                    <cite class="block mt-8 text-gray-500">
-                        Sebastian Schlein<br />
-                        Co-founder of <a href="https://beyondco.de" class="text-indigo-400 underline">Beyond Code</a>
-                    </cite>
-                </blockquote>
-            </div>
-        </div>
-    </div>
+        <x-slot:author-details>
+            Co-founder of <a href="https://beyondco.de" class="text-indigo-400 underline">Beyond Code</a>
+        </x-slot:author-details>
+    </x-testimonial>
 
     <x-section class="container mt-24 md:mt-32">
         <x-slot:title class="text-2xl sm:!text-3xl font-bold text-center">
@@ -104,46 +94,46 @@
         </x-slot:title>
 
         <div class="grid grid-cols-2 gap-16 mt-16 md:grid-cols-3">
-            <div class="col-span-1" x-data="{ count: 0, target: 40000 }" x-intersect.half="animateNumber">
+            <div class="col-span-1" x-data="{ count: 0, target: 50000 }" x-intersect.half="animateNumber">
                 <div class="flex items-center text-3xl sm:gap-1 md:gap-2 font-extralight sm:text-5xl lg:text-6xl xl:text-7xl">
                     <x-heroicon-s-arrow-trending-up class="flex-shrink-0 inline h-5 mr-2 text-green-500 sm:h-7" />
-                    <span x-text="Math.round(count).toLocaleString()">40,000</span>
+                    <span x-text="Math.round(count).toLocaleString()">50,000</span>
                 </div>
 
                 <div>monthly visitors</div>
             </div>
 
-            <div class="col-span-1" x-data="{ count: 0, target: 63000 }" x-intersect.half="animateNumber">
+            <div class="col-span-1" x-data="{ count: 0, target: 90000 }" x-intersect.half="animateNumber">
                 <div class="flex items-center text-3xl sm:gap-1 md:gap-2 font-extralight sm:text-5xl lg:text-6xl xl:text-7xl">
                     <x-heroicon-s-arrow-trending-up class="flex-shrink-0 inline h-5 mr-2 text-green-500 sm:h-7" />
-                    <span x-text="Math.round(count).toLocaleString()">63,000</span>
+                    <span x-text="Math.round(count).toLocaleString()">90,000</span>
                 </div>
 
                 <div>monthly page views</div>
             </div>
 
-            <div class="col-span-1" x-data="{ count: 0, target: 43000 }" x-intersect.half="animateNumber">
+            <div class="col-span-1" x-data="{ count: 0, target: 55000 }" x-intersect.half="animateNumber">
                 <div class="flex items-center text-3xl sm:gap-1 md:gap-2 font-extralight sm:text-5xl lg:text-6xl xl:text-7xl">
                     <x-heroicon-s-arrow-trending-up class="flex-shrink-0 inline h-5 mr-2 text-green-500 sm:h-7" />
-                    <span x-text="Math.round(count).toLocaleString()">43,000</span>
+                    <span x-text="Math.round(count).toLocaleString()">55,000</span>
                 </div>
 
                 <div>monthly sessions</div>
             </div>
 
-            <div class="col-span-1" x-data="{ count: 0, target: 75 }" x-intersect.half="animateNumber">
+            <div class="col-span-1" x-data="{ count: 0, target: 80 }" x-intersect.half="animateNumber">
                 <div class="flex items-center text-3xl sm:gap-1 md:gap-2 font-extralight sm:text-5xl lg:text-6xl xl:text-7xl">
                     <x-heroicon-s-arrow-trending-up class="flex-shrink-0 inline h-5 mr-2 text-green-500 sm:h-7" />
-                    <span x-text="Math.round(count).toLocaleString()">75</span>%
+                    <span x-text="Math.round(count).toLocaleString()">80</span>%
                 </div>
 
                 <div>visitors on desktop</div>
             </div>
 
-            <div class="col-span-1" x-data="{ count: 0, target: 4300 }" x-intersect.half="animateNumber">
+            <div class="col-span-1" x-data="{ count: 0, target: 4700 }" x-intersect.half="animateNumber">
                 <div class="flex items-center text-3xl sm:gap-1 md:gap-2 font-extralight sm:text-5xl lg:text-6xl xl:text-7xl">
                     <x-heroicon-s-arrow-trending-up class="flex-shrink-0 inline h-5 mr-2 text-green-500 sm:h-7" />
-                    <span x-text="Math.round(count).toLocaleString()">4300</span>
+                    <span x-text="Math.round(count).toLocaleString()">4700</span>
                 </div>
 
                 <div>followers on 𝕏</div>
@@ -155,7 +145,7 @@
                 </div>
 
                 <div>
-                    in the top 5 countries
+                    in the top 10 countries
                 </div>
             </div>
         </div>
@@ -185,50 +175,56 @@
         }
     </script>
 
-    <div class="container grid gap-16 mt-24 text-xl sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center md:mt-32">
-        <div class="flex flex-col h-full text-center">
-            <x-icon-pin class="h-32 mx-auto" />
+    <x-section class="container mt-24 scroll-mt-4 md:mt-32">
+        <x-slot:title class="text-center">
+            What I offer
+        </x-slot:title>
 
-            <p class="flex-grow mt-8 font-bold">
-                Pin your link and logo<br />
-                on my homepage and the footer
-            </p>
+        <div class="grid gap-16 mt-16 text-xl sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center">
+            <div class="flex flex-col h-full text-center">
+                <x-icon-pin class="h-32 mx-auto" />
 
-            <p class="text-center">
-                <x-button href="#display" class="mt-4 px-3 !py-2 text-sm font-bold bg-gradient-to-r from-blue-500 to-blue-600 shadow-md shadow-blue-100 text-white">
-                    Learn more
-                </x-button>
-            </p>
+                <p class="flex-grow mt-8 font-bold">
+                    Pin your link and logo<br />
+                    on my homepage and the footer
+                </p>
+
+                <p class="text-center">
+                    <x-button href="#display" class="mt-4 px-3 !py-2 text-sm font-bold bg-blue-600 text-white">
+                        Learn more
+                    </x-button>
+                </p>
+            </div>
+
+            <div class="flex flex-col h-full text-center">
+                <x-icon-write class="h-32 mx-auto" />
+
+                <p class="flex-grow mt-8 font-bold">
+                    Write about your business
+                </p>
+
+                <p class="text-center">
+                    <x-button href="#write" class="mt-4 px-3 !py-2 text-sm font-bold bg-blue-600 text-white">
+                        Learn more
+                    </x-button>
+                </p>
+            </div>
+
+            <div class="flex flex-col h-full text-center">
+                <x-icon-suit class="h-32 mx-auto" />
+
+                <p class="flex-grow mt-8 font-bold">
+                    Need a custom deal?
+                </p>
+
+                <p class="text-center">
+                    <x-button href="mailto:hello@benjamincrozat.com" class="mt-4 px-3 !py-2 text-sm font-bold bg-green-500 shadow-md shadow-green-100 text-white">
+                        Reach out
+                    </x-button>
+                </p>
+            </div>
         </div>
-
-        <div class="flex flex-col h-full text-center">
-            <x-icon-write class="h-32 mx-auto" />
-
-            <p class="flex-grow mt-8 font-bold">
-                Write about your business
-            </p>
-
-            <p class="text-center">
-                <x-button href="#write" class="mt-4 px-3 !py-2 text-sm font-bold bg-gradient-to-r from-blue-500 to-blue-600 shadow-md shadow-blue-100 text-white">
-                    Learn more
-                </x-button>
-            </p>
-        </div>
-
-        <div class="flex flex-col h-full text-center">
-            <x-icon-suit class="h-32 mx-auto" />
-
-            <p class="flex-grow mt-8 font-bold">
-                Need a custom deal?
-            </p>
-
-            <p class="text-center">
-                <x-button href="mailto:hello@benjamincrozat.com" class="mt-4 px-3 !py-2 text-sm font-bold bg-gradient-to-r from-green-500 to-green-600 shadow-md shadow-green-100 text-white">
-                    Reach out
-                </x-button>
-            </p>
-        </div>
-    </div>
+    </x-section>
 
     <x-section id="display" class="container mt-24 scroll-mt-4 md:mt-32 lg:max-w-screen-md">
         <x-slot:title class="text-2xl sm:!text-3xl font-bold text-center">
@@ -280,7 +276,7 @@
     </x-section>
 
     <div class="container mt-16 text-center md:max-w-screen-sm">
-        <a href="{{ config('services.lemonsqueezy.sponsorships.monthly') }}" class="inline-block px-6 py-3 font-bold text-white transition-opacity rounded shadow-lg bg-gradient-to-r from-orange-500 to-orange-400 shadow-orange-100 hover:opacity-75">
+        <a href="{{ config('services.lemonsqueezy.sponsorships.monthly') }}" class="inline-block px-6 py-3 font-bold text-white transition-opacity bg-orange-400 rounded hover:opacity-75">
             Get started for $49/month
         </a>
 
@@ -354,7 +350,7 @@
     </x-section>
 
     <div class="container mt-16 text-center md:max-w-screen-sm">
-        <a href="{{ config('services.lemonsqueezy.sponsored_content') }}" class="inline-block px-6 py-3 font-bold text-white transition-opacity rounded shadow-lg bg-gradient-to-r from-orange-500 to-orange-400 shadow-orange-100 hover:opacity-75">
+        <a href="{{ config('services.lemonsqueezy.sponsored_content') }}" class="inline-block px-6 py-3 font-bold text-white transition-opacity bg-orange-400 rounded hover:opacity-75">
             Get started for $499
         </a>
 

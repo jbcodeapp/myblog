@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Opening;
 use App\Models\Category;
-use App\Actions\Subscribe;
 use App\Repositories\PostRepository;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\CategoryRepository;
 use Algolia\AlgoliaSearch\RecommendClient;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use App\Repositories\Contracts\PostRepositoryContract;
 use App\Repositories\Contracts\CategoryRepositoryContract;
 
@@ -29,8 +30,6 @@ class AppServiceProvider extends ServiceProvider
                 $app['config']->get('scout.algolia.secret')
             );
         });
-
-        $this->app->bind(Subscribe::class, fn () => new Subscribe);
     }
 
     public function boot() : void
@@ -40,20 +39,21 @@ class AppServiceProvider extends ServiceProvider
         Model::unguard();
 
         // This categories variable I pass in this view composer is also used in the blog's navigation.
-        View::composer(['components.navigation', 'home'], function ($view) {
-            static $categories;
-
-            // If the static variable declared above has already been set, use it. Otherwise, set it.
-            // This prevents the query from being run multiple times on the same request.
-            $categories ??= cache()->rememberForever('categories', function () {
-                return Category::query()
-                    ->whereHas('posts')
-                    ->orderBy('is_highlighted', 'desc')
-                    ->orderBy('name')
-                    ->get();
-            });
+        View::composer('components.navigation', function ($view) {
+            $categories ??= Category::whereHas('posts', fn (Builder $query) => $query->published())
+                ->orderBy('is_highlighted', 'desc')
+                ->orderBy('name')
+                ->get();
 
             $view->with(compact('categories'));
+        });
+
+        View::composer('*', function ($view) {
+            static $randomOpening;
+
+            $randomOpening ??= Opening::inRandomOrder()->first();
+
+            $view->with(compact('randomOpening'));
         });
 
         Vite::useScriptTagAttributes(['defer' => true]);
